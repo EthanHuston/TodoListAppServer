@@ -18,10 +18,7 @@ app.get('/tasks', (req, res) => {
     if (req.query.completed !== undefined) {
         const isCompleted = req.query.completed === true;
         filteredTasks = filteredTasks.filter(task => task.completed === isCompleted);
-    } else {
-        return res.status(404).json({ message: 'Invalid request!' });
     }
-
     //Filter by duedate / created date if specified.
     if (req.query.sort_by) {
         const sortBy = req.query.sort_by.slice(1); // Remove the + or -, leaving dueDate or createdDate
