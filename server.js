@@ -36,9 +36,27 @@ app.get('/tasks', (req, res) => {
 
 //Fetch specific task endpoint
 app.get('/tasks/:id', (req, res) => {
+    //Check for task, return error if not found, otherwise return task.
     const taskToGet = tasks.find(task => task.id === req.params.id);
     if(!taskToGet) {
         return res.status(404).json({ message: 'Task not found' });
     }
     res.json(task);
+});
+
+//Create a task endpoint
+app.post('/tasks', (req, res) => {
+    //Extract the posted task, creating server-side information
+    const {taskDescription, dueDate, completed} = req.body;
+    const newTask = {
+        id: uuidv4(),
+        taskDescription,
+        createdDate: new Date().toISOString(),
+        dueDate,
+        completed
+    };
+
+    //Add task to "database" and send correct code.
+    tasks.push(newTask);
+    res.status(201).json(newTask);
 });
