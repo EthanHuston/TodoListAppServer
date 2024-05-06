@@ -33,3 +33,12 @@ app.get('/tasks', (req, res) => {
     //Return our resulting filtered tasks.
     res.json(filteredTasks);
 });
+
+//Fetch specific task endpoint
+app.get('/tasks/:id', (req, res) => {
+    const taskToGet = tasks.find(task => task.id === req.params.id);
+    if(!taskToGet) {
+        return res.status(404).json({ message: 'Task not found' });
+    }
+    res.json(task);
+});
