@@ -18,6 +18,8 @@ app.get('/tasks', (req, res) => {
     if (req.query.completed !== undefined) {
         const isCompleted = req.query.completed === true;
         filteredTasks = filteredTasks.filter(task => task.completed === isCompleted);
+    } else {
+        return res.status(404).json({ message: 'Invalid request!' });
     }
 
     //Filter by duedate / created date if specified.
