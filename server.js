@@ -17,6 +17,17 @@ app.get('/tasks', (req, res) => {
     //Start by checking for optional filter by completed
     if (req.query.completed !== undefined) {
         const isCompleted = req.query.completed === true;
-        filteredTasks = filteredTasks.filter(task => task.completed === isCompleted)
+        filteredTasks = filteredTasks.filter(task => task.completed === isCompleted);
     }
+
+    //Filter by duedate / created date if specified.
+    if (req.query.sort_by) {
+        const sortBy = req.query.sort_by.slice(1); // Remove the + or -, leaving dueDate or createdDate
+        const sortDirection = req.query.sort_by.charAt(0) === '-' ? -1 : 1 //Set the sorting direction based on + or -
+        //Sort tasks by the correct date and in the correct direction
+        filteredTasks.sort((a,b) => sortDirection * (new Date(a[sortBy]) - new Date(b[sortBy])));
+    }
+
+    //Return our resulting filtered tasks.
+    res.json(filteredTasks);
 });
