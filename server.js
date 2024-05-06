@@ -69,12 +69,30 @@ app.put('/tasks/:id', (req, res) => {
         return res.status(404).json({message: "Task not found!"});
     }
 
-    //Extract new task data and replace 
-    const { id, createdDate, taskDescription, dueDate, completed} = req.body
+    //Extract new task data and replace, throw error if changing immutable member
+    const { id, createdDate, taskDescription, dueDate, completed} = req.body;
     if ( id !== tasks[taskIndex].id || createdDate !== tasks[taskIndex].createdDate) {
-        return res.status(404).json({message: "Attempted to change immutable value!"})
+        return res.status(404).json({message: "Attempted to change immutable value!"});
     }
     tasks[taskIndex] = {id, createdDate, taskDescription, dueDate, completed};
 
+    //Return result
     res.json(tasks[taskIndex]);
+});
+
+
+//Delete task endpoint
+app.delete('/tasks/:id', (req, res) => {
+    //Check that task exists, return error if not found
+    const taskIndex = tasks.findIndex(task => task.id === req.params.id);
+    if(taskIndex === -1) {
+        return res.status(404).json({message: "Task not found!"});
+    }
+
+    tasks.splice(taskIndex, 1);
+    res.json({message: ""});
+});
+
+app.listen(PORT, () => {
+    console.log("Server running on port ${PORT}");
 });
