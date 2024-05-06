@@ -60,3 +60,21 @@ app.post('/tasks', (req, res) => {
     tasks.push(newTask);
     res.status(201).json(newTask);
 });
+
+//Update a task endpoint
+app.put('/tasks/:id', (req, res) => {
+    //Look for task, return error if not found
+    const taskIndex = tasks.findIndex(task => task.id === req.params.id);
+    if(taskIndex === -1) {
+        return res.status(404).json({message: "Task not found!"});
+    }
+
+    //Extract new task data and replace 
+    const { id, createdDate, taskDescription, dueDate, completed} = req.body
+    if ( id !== tasks[taskIndex].id || createdDate !== tasks[taskIndex].createdDate) {
+        return res.status(404).json({message: "Attempted to change immutable value!"})
+    }
+    tasks[taskIndex] = {id, createdDate, taskDescription, dueDate, completed};
+
+    res.json(tasks[taskIndex]);
+});
