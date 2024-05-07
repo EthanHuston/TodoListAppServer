@@ -8,21 +8,21 @@ const PORT = process.env.PORT || 3000;
 // This will hold the tasks in the api
 let tasks = [
     {
-        id: uuid.v4(),
+        id: uuidv4(),
         taskDescription: "Sample Task 1",
         createdDate: new Date().toISOString(),
         dueDate: new Date(Date.now() + 86400000), // Tomorrow
         completed: false
     },
     {
-        id: uuid.v4(),
+        id: uuidv4(),
         taskDescription: "Sample Task 2",
         createdDate: new Date().toISOString(),
         dueDate: new Date(Date.now() + 2 * 86400000), // Day after tomorrow
         completed: true
     },
     {
-        id: uuid.v4(),
+        id: uuidv4(),
         taskDescription: "Sample Task 3",
         createdDate: new Date().toISOString(),
         dueDate: new Date(Date.now() + 3 * 86400000), // Day after the day after tomorrow
