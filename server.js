@@ -10,22 +10,22 @@ let tasks = [
     {
         id: uuidv4(),
         taskDescription: "Sample Task 1",
-        createdDate: new Date().toISOString(),
-        dueDate: new Date(Date.now() + 86400000), // Tomorrow
+        createdDate: new Date().toString(),
+        dueDate: new Date(Date.now() + 86400000).toString(), // Tomorrow
         completed: false
     },
     {
         id: uuidv4(),
         taskDescription: "Sample Task 2",
-        createdDate: new Date().toISOString(),
-        dueDate: new Date(Date.now() + 2 * 86400000), // Day after tomorrow
+        createdDate: new Date().toString(),
+        dueDate: new Date(Date.now() + 2 * 86400000).toString(), // Day after tomorrow
         completed: true
     },
     {
         id: uuidv4(),
         taskDescription: "Sample Task 3",
-        createdDate: new Date().toISOString(),
-        dueDate: new Date(Date.now() + 3 * 86400000), // Day after the day after tomorrow
+        createdDate: new Date().toString(),
+        dueDate: new Date(Date.now() + 3 * 86400000).toString(), // Day after the day after tomorrow
         completed: false
     }
 ];
@@ -70,7 +70,7 @@ app.post('/tasks', (req, res) => {
     const newTask = {
         id: uuidv4(),
         taskDescription,
-        createdDate: new Date().toISOString(),
+        createdDate: new Date().toString(),
         dueDate,
         completed
     };
