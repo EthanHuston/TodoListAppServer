@@ -38,7 +38,8 @@ app.get('/tasks', (req, res) => {
 
     //Start by checking for optional filter by completed
     if (req.query.completed !== undefined) {
-        const isCompleted = req.query.completed === true;
+        const isCompleted = req.query.completed === "true";
+        console.log(isCompleted)
         filteredTasks = filteredTasks.filter(task => task.completed === isCompleted);
     }
     //Filter by duedate / created date if specified.
