@@ -39,7 +39,6 @@ app.get('/tasks', (req, res) => {
     //Start by checking for optional filter by completed
     if (req.query.completed !== undefined) {
         const isCompleted = req.query.completed === "true";
-        console.log(isCompleted)
         filteredTasks = filteredTasks.filter(task => task.completed === isCompleted);
     }
     //Filter by duedate / created date if specified.
@@ -49,7 +48,6 @@ app.get('/tasks', (req, res) => {
         //Sort tasks by the correct date and in the correct direction
         filteredTasks.sort((a,b) => sortDirection * (new Date(a[sortBy]) - new Date(b[sortBy])));
     }
-
     //Return our resulting filtered tasks.
     res.json(filteredTasks);
 });
@@ -88,13 +86,15 @@ app.put('/tasks/:id', (req, res) => {
     if(taskIndex === -1) {
         return res.status(404).json({message: "Task not found!"});
     }
-
+   
     //Extract new task data and replace, throw error if changing immutable member
     const { id, createdDate, taskDescription, dueDate, completed} = req.body;
     if ( id !== tasks[taskIndex].id || createdDate !== tasks[taskIndex].createdDate) {
         return res.status(404).json({message: "Attempted to change immutable value!"});
     }
-    tasks[taskIndex] = {id, createdDate, taskDescription, dueDate, completed};
+    tasks[taskIndex] = {id, taskDescription, createdDate, dueDate, completed};
+
+    
 
     //Return result
     res.json(tasks[taskIndex]);
@@ -110,6 +110,7 @@ app.delete('/tasks/:id', (req, res) => {
     }
 
     tasks.splice(taskIndex, 1);
+
     res.json({message: ""});
 });
 
