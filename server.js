@@ -2,10 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
 
+//Create app with express
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// This will hold the tasks in the api
+// Array to hold "data", filled with dummy tasks to begin with.
 let tasks = [
     {
         id: uuidv4(),
@@ -94,9 +95,7 @@ app.put('/tasks/:id', (req, res) => {
     }
     tasks[taskIndex] = {id, taskDescription, createdDate, dueDate, completed};
 
-    
-
-    //Return result
+    //Return updated task
     res.json(tasks[taskIndex]);
 });
 
@@ -109,11 +108,13 @@ app.delete('/tasks/:id', (req, res) => {
         return res.status(404).json({message: "Task not found!"});
     }
 
+    //remove the task from the database
     tasks.splice(taskIndex, 1);
 
     res.json({message: ""});
 });
 
+//confirm server is running for testing
 app.listen(PORT, () => {
     console.log("Server running on port ${PORT}");
 });
